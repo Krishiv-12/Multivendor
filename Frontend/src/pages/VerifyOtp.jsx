@@ -18,7 +18,7 @@ const VerifyOtp = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:5000/api/otp/verify", {
+      const res = await axios.post("https://multivendor-ti71.onrender.com/api/otp/verify", {
         email,
         otp,
       });

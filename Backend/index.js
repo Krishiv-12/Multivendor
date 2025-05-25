@@ -25,10 +25,16 @@ const app = express();
 
 const _dirname = path.resolve()
 
-app.use(cors());
-
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(urlencoded({ extended: true }));
 
+const corsOptions = {
+  origin:"https://multivendor-ti71.onrender.com",
+  Credentials:true
+}
+
+app.use(cors(corsOptions));
 
 
 app.use("/api/auth", authRoutes);

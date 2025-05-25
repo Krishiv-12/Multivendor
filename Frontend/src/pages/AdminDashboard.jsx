@@ -29,7 +29,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/admin/stats", {
+        const res = await axios.get("https://multivendor-ti71.onrender.com/api/admin/stats", {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         });
         setStats(res.data);
@@ -43,10 +43,10 @@ const AdminDashboard = () => {
   // Function to fetch details when clicking on a box
   const fetchDetails = async (type) => {
     let url = "";
-    if (type === "users") url = "http://localhost:5000/api/admin/users";
-    if (type === "products") url = "http://localhost:5000/api/admin/products";
-    if (type === "orders") url = "http://localhost:5000/api/admin/orders";
-    if (type === "vendors") url = "http://localhost:5000/api/admin/vendors";
+    if (type === "users") url = "https://multivendor-ti71.onrender.com/api/admin/users";
+    if (type === "products") url = "https://multivendor-ti71.onrender.com/api/admin/products";
+    if (type === "orders") url = "https://multivendor-ti71.onrender.com/api/admin/orders";
+    if (type === "vendors") url = "https://multivendor-ti71.onrender.com/api/admin/vendors";
 
     try {
       const res = await axios.get(url, {
@@ -62,7 +62,7 @@ const AdminDashboard = () => {
   const handleBanUnban = async (userId) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/admin/users/${userId}/ban`,
+        `https://multivendor-ti71.onrender.com/api/admin/users/${userId}/ban`,
         {},
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -85,7 +85,7 @@ const AdminDashboard = () => {
 
     try {
       await axios.delete(
-        `http://localhost:5000/api/admin/products/${productId}`,
+        `https://multivendor-ti71.onrender.com/api/admin/products/${productId}`,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }
@@ -109,7 +109,7 @@ const AdminDashboard = () => {
   const handleUpdateProduct = async () => {
     try {
       const res = await axios.put(
-        `http://localhost:5000/api/admin/products/${editProduct._id}`,
+        `https://multivendor-ti71.onrender.com/api/admin/products/${editProduct._id}`,
         editedData,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -136,7 +136,7 @@ const AdminDashboard = () => {
       const formData = new FormData();
       formData.append("image", imageFile);
   
-      const res = await axios.post("http://localhost:5000/api/upload", formData, {
+      const res = await axios.post("https://multivendor-ti71.onrender.com/api/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -156,7 +156,7 @@ const AdminDashboard = () => {
       const imageUrl = await handleImageUpload();
       const finalProduct = { ...newProduct, images: [imageUrl] };
   
-      await axios.post("http://localhost:5000/api/admin/products", finalProduct, {
+      await axios.post("https://multivendor-ti71.onrender.com/api/admin/products", finalProduct, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
   

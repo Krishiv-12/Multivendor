@@ -7,7 +7,7 @@ const AdminOrders = () => {
   // 🔄 Fetch all orders on mount
   const fetchOrders = async () => {
     try {
-      const { data } = await axios.get("http://localhost:5000/api/orders", {
+      const { data } = await axios.get("https://multivendor-ti71.onrender.com/api/orders", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -26,7 +26,7 @@ const AdminOrders = () => {
   const updateStatus = async (orderId, newStatus) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/orders/status/${orderId}`,
+        `https://multivendor-ti71.onrender.com/api/orders/status/${orderId}`,
         { status: newStatus },
         {
           headers: {

@@ -14,7 +14,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/user/profile", {
+        const res = await axios.get("https://multivendor-ti71.onrender.com/api/user/profile", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -31,7 +31,7 @@ const Profile = () => {
   const handleUpdate = async () => {
     try {
       const res = await axios.put(
-        "http://localhost:5000/api/user/profile",
+        "https://multivendor-ti71.onrender.com/api/user/profile",
         { name: newName, password },
         {
           headers: {

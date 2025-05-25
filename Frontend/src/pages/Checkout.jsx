@@ -70,7 +70,7 @@ const Checkout = () => {
   const createFinalOrder = async (paymentInfo) => {
     try {
       await axios.post(
-        "http://localhost:5000/api/orders",
+        "https://multivendor-ti71.onrender.com/api/orders",
         {
           cartItems: cart,
           shippingInfo: formData,

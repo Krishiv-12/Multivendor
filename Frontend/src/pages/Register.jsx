@@ -15,7 +15,7 @@ const Register = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/register", user);
+      const res = await axios.post("https://multivendor-ti71.onrender.com/api/auth/register", user);
       setMessage("Registration successful! Please login.");
       setTimeout(() => navigate("/login"), 2000);
     } catch (error) {

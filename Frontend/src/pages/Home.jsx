@@ -10,7 +10,7 @@ const Home = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/products?page=1&limit=9");
+        const res = await axios.get("https://multivendor-ti71.onrender.com/api/products?page=1&limit=9");
         setProducts(res.data.products);
       } catch (err) {
         setError("Failed to load products");

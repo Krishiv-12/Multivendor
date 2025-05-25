@@ -14,7 +14,7 @@ const [comment, setComment] = useState("");
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/products/${id}`);
+        const res = await axios.get(`https://multivendor-ti71.onrender.com/api/products/${id}`);
         setProduct(res.data);
       } catch (error) {
         console.error("Error fetching product:", error);
@@ -44,7 +44,7 @@ const [comment, setComment] = useState("");
     try {
       const token = localStorage.getItem("token");
       await axios.post(
-        `http://localhost:5000/api/products/${product._id}/reviews`,
+        `https://multivendor-ti71.onrender.com/api/products/${product._id}/reviews`,
         { rating, comment },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -52,7 +52,7 @@ const [comment, setComment] = useState("");
       setRating("");
       setComment("");
       // Refetch product to update reviews
-      const res = await axios.get(`http://localhost:5000/api/products/${id}`);
+      const res = await axios.get(`https://multivendor-ti71.onrender.com/api/products/${id}`);
       setProduct(res.data);
     } catch (err) {
       toast.error(err.response?.data?.message || "Failed to submit review");

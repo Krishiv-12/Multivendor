@@ -14,7 +14,7 @@ const Products = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/products?page=${page}&limit=9`);
+        const res = await axios.get(`https://multivendor-ti71.onrender.com/api/products?page=${page}&limit=9`);
         setProducts(res.data.products || []);
         setTotalPages(res.data.totalPages);
       } catch (error) {
@@ -33,7 +33,7 @@ const Products = () => {
   const handleAddToWishlist = async (productId) => {
     try {
       await axios.post(
-        "http://localhost:5000/api/wishlist/add",
+        "https://multivendor-ti71.onrender.com/api/wishlist/add",
         { productId },
         { headers: { Authorization: `Bearer ${token}` } }
       );

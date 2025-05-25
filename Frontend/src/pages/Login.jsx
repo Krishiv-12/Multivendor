@@ -15,14 +15,14 @@ const Login = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", user);
+      const res = await axios.post("https://multivendor-ti71.onrender.com/api/auth/login", user);
       localStorage.setItem("role", res.data.role);
       localStorage.setItem("email", res.data.email);
       localStorage.setItem("name", res.data.user.name);
       localStorage.setItem("isVerified", "false");
       setMessage("Login successful! Sending OTP...");
 
-      await axios.post("http://localhost:5000/api/otp/send", {
+      await axios.post("https://multivendor-ti71.onrender.com/api/otp/send", {
         email: res.data.email,
       });
 

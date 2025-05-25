@@ -8,7 +8,7 @@ const OrderHistory = () => {
     const fetchOrders = async () => {
       try {
         const { data } = await axios.get(
-          "http://localhost:5000/api/orders/my-orders",
+          "https://multivendor-ti71.onrender.com/api/orders/my-orders",
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -27,7 +27,7 @@ const OrderHistory = () => {
   const cancelOrder = async (orderId) => {
     try {
       const { data } = await axios.put(
-        `http://localhost:5000/api/orders/cancel/${orderId}`,
+        `https://multivendor-ti71.onrender.com/api/orders/cancel/${orderId}`,
         {},
         {
           headers: {

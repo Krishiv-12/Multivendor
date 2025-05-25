@@ -9,7 +9,7 @@ const Wishlist = () => {
 
   const fetchWishlist = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/wishlist", {
+      const res = await axios.get("https://multivendor-ti71.onrender.com/api/wishlist", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setWishlistItems(res.data);
@@ -20,7 +20,7 @@ const Wishlist = () => {
 
   const handleRemove = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/wishlist/remove/${id}`, {
+      await axios.delete(`https://multivendor-ti71.onrender.com/api/wishlist/remove/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchWishlist(); // Refresh wishlist

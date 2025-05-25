@@ -8,7 +8,7 @@ const VendorDashboard = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/products?vendor=${vendorEmail}`);
+        const res = await axios.get(`https://multivendor-ti71.onrender.com/api/products?vendor=${vendorEmail}`);
         setProducts(res.data);
       } catch (error) {
         console.error("Error fetching products:", error);
