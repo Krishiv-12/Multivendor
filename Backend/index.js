@@ -28,7 +28,6 @@ const _dirname = path.resolve()
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(urlencoded({ extended: true }));
 
 const corsOptions = {
   origin:"https://multivendor-ti71.onrender.com",
