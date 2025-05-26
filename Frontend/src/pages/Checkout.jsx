@@ -30,7 +30,7 @@ const Checkout = () => {
   const handlePayment = async () => {
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/api/payment/create-order",
+        "https://multivendor-ti71.onrender.com/api/payment/create-order",
         { amount: totalPrice },
         {
           headers: {
