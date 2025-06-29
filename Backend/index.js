@@ -21,7 +21,7 @@ connectDB();
 
 const PORT = process.env.PORT || 5000;
 const app = express();
-const __dirname = path.resolve(); // ✅ small typo fix from "_dirname" to "__dirname"
+const __dirname = path.resolve();
 
 // ✅ Setup allowed origins
 const allowedOrigins = [
@@ -32,7 +32,6 @@ const allowedOrigins = [
 // ✅ CORS setup before any routes
 app.use(cors({
   origin: function (origin, callback) {
-    // Handle no-origin requests like Postman or same-origin
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {

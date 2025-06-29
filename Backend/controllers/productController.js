@@ -37,7 +37,11 @@ export const getProducts = async (req, res) => {
     const skip = (page - 1) * limit;
 
     const total = await Product.countDocuments();
-    const products = await Product.find().skip(skip).limit(limit);
+    const products = await Product.find()
+  .select("name price images category")
+  .skip(skip)
+  .limit(limit)
+  .lean();
 
     res.json({
       products,
