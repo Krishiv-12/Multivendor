@@ -3,7 +3,12 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-  const [user, setUser] = useState({ name: "", email: "", password: "", role: "customer" });
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+    role: "customer",
+  });
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
@@ -15,87 +20,112 @@ const Register = () => {
     }
 
     try {
-      const res = await axios.post("https://multivendor-ti71.onrender.com/api/auth/register", user);
+      await axios.post(
+        "https://multivendor-ti71.onrender.com/api/auth/register",
+        user
+      );
       setMessage("Registration successful! Please login.");
       setTimeout(() => navigate("/login"), 2000);
     } catch (error) {
       setMessage(error.response?.data?.message || "Registration failed!");
     }
-  };  
+  };
 
   return (
-    <div className="flex mt-16 justify-center">
-      <div className="h-[75vh] shadow-xl rounded-2xl p-8 w-full max-w-md">
-        <div className="flex justify-center mb-4">
-          <div className="bg-purple-200 p-3 rounded-full">
-            <svg
-              className="w-6 h-6 text-purple-700"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z" />
-            </svg>
-          </div>
+    <div className="flex items-center justify-center py-4">
+      <div className="flex rounded-2xl overflow-hidden bg-white dark:bg-gray-900">
+        
+        {/* LEFT IMAGE SECTION */}
+        <div className="hidden md:flex w-1/2 bg-black relative">
+          <img
+            src="https://i.pinimg.com/1200x/61/b7/15/61b715b8535c482a82469524acfd7677.jpg"
+            alt="Register Visual"
+            className="absolute inset-0 w-full h-full object-cover opacity-90"
+          />
         </div>
 
-        <h2 className="text-center text-2xl font-bold text-gray-800 mb-2 dark:text-gray-200">Create an account</h2>
-        <p className="text-center text-sm text-gray-500 mb-6 dark:text-gray-400">
-          Sign up to access exclusive features, personalized content, and start your journey with us!
-        </p>
+        {/* RIGHT FORM SECTION */}
+        <div className="w-full md:w-1/2 p-10">
+          <div className="flex items-center gap-2 mb-4">
+            <div className="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center text-white font-bold">
+              ✳
+            </div>
+            <h2 className="text-2xl font-semibold">Get Started</h2>
+          </div>
 
-        {message && <p className="text-center text-green-600 mb-2">{message}</p>}
+          <p className="text-gray-500 mb-6">
+                        Create your account. Start shopping smarter.
 
-        <form onSubmit={handleRegister} className="space-y-4">
-          <input
-            type="text"
-            placeholder="Name*"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 dark:text-black"
-            value={user.name}
-            onChange={(e) => setUser({ ...user, name: e.target.value })}
-          />
-          <input
-            type="email"
-            placeholder="Email*"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 dark:text-black"
-            value={user.email}
-            onChange={(e) => setUser({ ...user, email: e.target.value })}
-          />
-          <input
-            type="password"
-            placeholder="Password*"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 dark:text-black"
-            value={user.password}
-            onChange={(e) => setUser({ ...user, password: e.target.value })}
-          />
+          </p>
 
-          {/* Role Select Dropdown */}
-          <select
-            value={user.role}
-            onChange={(e) => setUser({ ...user, role: e.target.value })}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 dark:text-black"
-          >
-            <option value="customer">Customer</option>
-            <option value="vendor">Vendor</option>
-            <option value="admin">Admin</option>
-          </select>
+          {message && (
+            <p className="mb-4 text-sm text-center text-green-600">
+              {message}
+            </p>
+          )}
 
-          <button
-            type="submit"
-            className="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition"
-          >
-            Sign Up
-          </button>
-        </form>
+          <form onSubmit={handleRegister} className="space-y-4">
+            <input
+              type="text"
+              placeholder="Your name"
+              className="w-full text-black px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
+              value={user.name}
+              onChange={(e) =>
+                setUser({ ...user, name: e.target.value })
+              }
+            />
 
-        <p className="text-center text-sm text-gray-500 mt-4 dark:text-gray-400">
-          Already a member?{" "}
-          <span
-            className="text-purple-600 hover:underline cursor-pointer"
-            onClick={() => navigate("/login")}
-          >
-            Sign In
-          </span>
-        </p>
+            <input
+              type="email"
+              placeholder="Your email"
+              className="w-full text-black px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
+              value={user.email}
+              onChange={(e) =>
+                setUser({ ...user, email: e.target.value })
+              }
+            />
+
+            <input
+              type="password"
+              placeholder="Create new password"
+              className="w-full text-black px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
+              value={user.password}
+              onChange={(e) =>
+                setUser({ ...user, password: e.target.value })
+              }
+            />
+
+            {/* ROLE SELECT */}
+            <select
+              className="w-full text-black font-semibold px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
+              value={user.role}
+              onChange={(e) =>
+                setUser({ ...user, role: e.target.value })
+              }
+            >
+              <option value="customer">Customer</option>
+              <option value="vendor">Vendor</option>
+              <option value="admin">Admin</option>
+            </select>
+
+            <button
+              type="submit"
+              className="w-full bg-[#FFBE00] hover:bg-[#f0b504] text-white py-3 rounded-lg font-medium transition"
+            >
+              Create new account
+            </button>
+          </form>
+
+          <p className="text-sm text-center text-gray-500 mt-6">
+            Already have an account?{" "}
+            <span
+              onClick={() => navigate("/login")}
+              className="text-orange-500 font-medium cursor-pointer hover:underline"
+            >
+              Login
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   );

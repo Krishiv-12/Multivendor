@@ -37,7 +37,7 @@ const ProtectedRoute = ({ element, allowedRoles }) => {
 
 function App() {
   return (
-    <div className="min-h-screen w-full bg-gray-200 dark:bg-gray-900 dark:text-white">
+    <div className="min-h-screen w-full bg-[#FFFFFF] dark:bg-gray-900 dark:text-white">
     <CartProvider>
       <Router>
         <Navbar />

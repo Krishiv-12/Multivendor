@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 const ProductCard = ({ product, index }) => (
   <motion.div
     key={product._id}
-    className="border bg-white rounded-xl shadow-md hover:shadow-xl transition duration-300 w-72 p-4 flex flex-col items-center"
+    className="border bg-[#eeebeb] rounded-xl shadow-md hover:shadow-xl transition duration-300 w-72 p-2 flex flex-col items-center"
     initial={{ opacity: 0, scale: 0.9, y: 20 }}
     animate={{ opacity: 1, scale: 1, y: 0 }}
     transition={{ delay: index * 0.05, duration: 0.4 }}
@@ -25,17 +25,20 @@ const ProductCard = ({ product, index }) => (
             )
       }
       alt={product.name}
-      className="w-60 h-60 object-cover rounded-lg"
+      className="w-80 h-60 object-cover rounded-lg"
     />
 
-    <h3 className="text-lg font-semibold mt-4 text-gray-800">{product.name}</h3>
-    <p className="text-gray-600 mt-1">₹{product.price}</p>
+    <h3 className="text-3xl mt-1 font-darker text-gray-800">{product.name}</h3>
+    <div className="flex gap-6 items-center mt-4">
+      <p className="bg-gray-200 border border-gray-400 rounded text-sm px-4 py-2 mt-1 cursor-default">₹{product.price}</p>
     <Link
       to={`/product/${product._id}`}
-      className="bg-blue-600 hover:bg-blue-700 text-white text-sm mt-4 px-4 py-2 rounded-full transition"
+      className="bg-black hover:bg-gray-200 hover:border hover:border-gray-500 hover:text-black text-white text-sm mt-1 px-4 py-2 transition duration-300 rounded"
     >
       Buy Now
     </Link>
+    </div>
+    
   </motion.div>
 );
 
@@ -77,19 +80,25 @@ const Home = () => {
     <div className="text-center">
       {/* Hero Section */}
       <div
-        className="bg-cover bg-center text-white py-24 px-4"
-        style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1729420478052-0264c4a72b1b?q=80&w=2030&auto=format&fit=crop')`,
-        }}
+        className="bg-cover bg-center text-white py-48 px-4"
+       style={{
+  backgroundImage: `
+    linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+    url('https://images.pexels.com/photos/34737559/pexels-photo-34737559.jpeg')
+  `,
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+}}
+
       >
-        <h1 className="text-4xl sm:text-5xl font-bold drop-shadow">
+        <h1 className="text-4xl font-allison sm:text-8xl drop-shadow">
           Welcome to MultiVendor Marketplace
         </h1>
-        <p className="mt-3 text-lg sm:text-xl drop-shadow">
+        <p className="mt-3 text-lg font-reem sm:text-2xl drop-shadow">
           Find the best products from various vendors
         </p>
         <Link to="/shop">
-          <button className="mt-6 px-6 py-3 bg-white text-blue-700 font-semibold rounded-full hover:bg-blue-100 transition duration-300">
+          <button className="mt-6 px-6 py-3 bg-[#F4F3E9] text-[#5d5b49] font-semibold font-reem hover:bg-blue-100 transition duration-300">
             🛍️ Shop Now
           </button>
         </Link>

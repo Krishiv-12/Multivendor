@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [user, setUser] = useState({ email: "", password: "" });
@@ -15,79 +15,114 @@ const Login = () => {
     }
 
     try {
-      const res = await axios.post("https://multivendor-ti71.onrender.com/api/auth/login", user);
+      const res = await axios.post(
+        "https://multivendor-ti71.onrender.com/api/auth/login",
+        user
+      );
+
       localStorage.setItem("role", res.data.role);
       localStorage.setItem("email", res.data.email);
       localStorage.setItem("name", res.data.user.name);
       localStorage.setItem("isVerified", "false");
-      setMessage("Login successful! Sending OTP...");
+
+      setMessage("Verifying credentials...");
+      setTimeout(() => {
+        setMessage("OTP sent securely to your email.");
+      }, 1500);
 
       await axios.post("https://multivendor-ti71.onrender.com/api/otp/send", {
         email: res.data.email,
       });
 
       window.dispatchEvent(new Event("userUpdated"));
-
-      setMessage("OTP sent! Redirecting...");
       navigate("/verify-otp", { state: { email: user.email } });
-
     } catch (error) {
       setMessage(error.response?.data?.message || "Login failed!");
     }
   };
 
   return (
-    <div className="flex mt-16 justify-center">
-      <div className="h-[75vh] shadow-xl rounded-2xl p-8 w-full max-w-md">
-        <div className="flex justify-center mb-4">
-          <div className="bg-purple-200 p-3 rounded-full">
-            <svg
-              className="w-6 h-6 text-purple-700"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z" />
-            </svg>
-          </div>
+    <div className="flex items-center justify-center py-4">
+      <div className="flex w-full max-w-5xl h-[540px] rounded-2xl overflow-hidden">
+        {/* LEFT IMAGE SECTION */}
+        <div className="hidden md:flex w-1/2 bg-black relative">
+          <img
+            src="https://i.pinimg.com/1200x/60/a3/de/60a3de7769d3e52a826d64efc8e92c77.jpg"
+            alt="Login Visual"
+            className="absolute inset-0 w-full h-full object-cover opacity-90"
+          />
         </div>
 
-        <h2 className="text-center text-2xl font-bold text-gray-800 mb-1 dark:text-gray-200">Welcome Back!</h2>
-        <p className="text-center text-sm text-gray-500 mb-6 dark:text-gray-400">
-          We missed you! Please enter your details.
-        </p>
+        {/* RIGHT FORM SECTION */}
+        <div className="w-full md:w-1/2 p-10">
+          <div className="flex items-center gap-2 mb-4">
+            <div className="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center text-white font-bold">
+              ✳
+            </div>
+            <h2 className="text-2xl font-semibold">Welcome Back</h2>
+          </div>
 
-        {message && <p className="text-center text-green-600 mb-4">{message}</p>}
+          <p className="text-gray-500 mb-6">
+            Login to continue shopping smarter.
+          </p>
 
-        <form onSubmit={handleLogin} className="space-y-4">
-          <input
-            type="email"
-            placeholder="Email"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 dark:text-black"
-            value={user.email}
-            onChange={(e) => setUser({ ...user, email: e.target.value })}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 dark:text-black"
-            value={user.password}
-            onChange={(e) => setUser({ ...user, password: e.target.value })}
-          />
+          {message && (
+            <div className="mb-4 flex items-center gap-3 rounded-lg bg-blue-50 border border-blue-200 px-4 py-3 text-blue-700">
+              <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24">
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                  fill="none"
+                />
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                />
+              </svg>
+              <span className="text-sm font-medium">{message}</span>
+            </div>
+          )}
 
-          <button
-            type="submit"
-            className="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition"
-          >
-            Login
-          </button>
-        </form>
+          <form onSubmit={handleLogin} className="space-y-4">
+            <input
+              type="email"
+              placeholder="Your email"
+              className="w-full text-black px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
+              value={user.email}
+              onChange={(e) => setUser({ ...user, email: e.target.value })}
+            />
 
-        <p className="text-center text-sm text-gray-500 mt-4 dark:text-gray-400">
-          Don’t have an account?{" "}
-          <Link to="/register" className="text-purple-600 hover:underline">
-            Sign up
-          </Link>
-        </p>
+            <input
+              type="password"
+              placeholder="Your password"
+              className="w-full text-black px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
+              value={user.password}
+              onChange={(e) => setUser({ ...user, password: e.target.value })}
+            />
+
+            <button
+              type="submit"
+              className="w-full bg-[#FFBE00] hover:bg-[#f0b504] text-white py-3 rounded-lg font-medium transition"
+            >
+              Login
+            </button>
+          </form>
+
+          <p className="text-sm text-center text-gray-500 mt-6">
+            Don’t have an account?{" "}
+            <span
+              onClick={() => navigate("/register")}
+              className="text-orange-500 font-medium cursor-pointer hover:underline"
+            >
+              Sign up
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   );

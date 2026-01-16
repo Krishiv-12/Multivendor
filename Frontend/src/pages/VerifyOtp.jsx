@@ -1,11 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const VerifyOtp = () => {
   const [otp, setOtp] = useState("");
   const [message, setMessage] = useState("");
-  const location = useLocation();
   const navigate = useNavigate();
   const email = localStorage.getItem("email");
 
@@ -18,16 +17,16 @@ const VerifyOtp = () => {
     }
 
     try {
-      const res = await axios.post("https://multivendor-ti71.onrender.com/api/otp/verify", {
-        email,
-        otp,
-      });
+      const res = await axios.post(
+        "https://multivendor-ti71.onrender.com/api/otp/verify",
+        { email, otp }
+      );
 
       if (res.data.success) {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("isVerified", "true");
         localStorage.removeItem("email");
-        setMessage("OTP Verified Successfully!");
+        setMessage("OTP verified successfully.");
 
         const role = localStorage.getItem("role");
         setTimeout(() => {
@@ -35,9 +34,8 @@ const VerifyOtp = () => {
           else if (role === "vendor") navigate("/vendor");
           else navigate("/");
         }, 1500);
-
       } else {
-        setMessage("Invalid OTP!");
+        setMessage("Invalid OTP. Please try again.");
       }
     } catch (err) {
       setMessage("Error verifying OTP");
@@ -45,41 +43,72 @@ const VerifyOtp = () => {
   };
 
   return (
-    <div className="flex mt-16 justify-center">
-      <div className="h-[75vh] shadow-xl rounded-2xl p-8 w-full max-w-md">
-        <div className="flex justify-center mb-4">
-          <div className="bg-purple-200 p-3 rounded-full">
+    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
+      <div className="w-full max-w-md rounded-2xl bg-white shadow-xl p-8">
+        
+        {/* Icon */}
+        <div className="flex justify-center mb-6">
+          <div className="h-14 w-14 rounded-full bg-blue-100 flex items-center justify-center">
             <svg
-              className="w-6 h-6 text-purple-700"
-              fill="currentColor"
+              className="h-7 w-7 text-blue-600"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
               viewBox="0 0 24 24"
             >
-              <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 11c0 1.105-.895 2-2 2s-2-.895-2-2 .895-2 2-2 2 .895 2 2zm0 0v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
             </svg>
           </div>
         </div>
 
-        <h2 className="text-center text-2xl font-bold text-gray-800 mb-1">OTP Verification</h2>
-        <p className="text-center text-sm text-gray-500 mb-6">Please enter the OTP sent to your email.</p>
+        {/* Title */}
+        <h2 className="text-center text-2xl font-bold text-gray-900">
+          Code Verification
+        </h2>
+        <p className="mt-2 text-center text-sm text-gray-500">
+          We have sent a verification code to your email
+        </p>
 
-        {message && <p className="text-center text-green-600 mb-4">{message}</p>}
+        {/* Message */}
+        {message && (
+          <div className="mt-4 text-center text-sm font-medium text-green-600">
+            {message}
+          </div>
+        )}
 
-        <form onSubmit={handleVerify} className="space-y-4">
+        {/* Form */}
+        <form onSubmit={handleVerify} className="mt-6 space-y-6">
+          
+          {/* OTP Input */}
           <input
             type="text"
-            placeholder="Enter OTP"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+            maxLength="6"
+            placeholder="Enter 6-digit OTP"
             value={otp}
             onChange={(e) => setOtp(e.target.value)}
+            className="w-full text-center tracking-[0.4em] text-lg font-semibold rounded-lg border border-gray-300 px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
 
+          {/* Button */}
           <button
             type="submit"
-            className="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition"
+            className="w-full rounded-full bg-blue-600 py-3 text-white font-semibold hover:bg-blue-700 transition"
           >
-            Verify OTP
+            Verify Account
           </button>
         </form>
+
+        {/* Resend */}
+        <p className="mt-6 text-center text-sm text-gray-500">
+          Didn’t receive the code?{" "}
+          <span className="cursor-pointer text-blue-600 hover:underline">
+            Resend
+          </span>
+        </p>
       </div>
     </div>
   );
