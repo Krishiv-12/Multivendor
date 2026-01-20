@@ -12,16 +12,16 @@ const ProductCard = ({ product, index }) => (
     transition={{ delay: index * 0.05, duration: 0.4 }}
   >
     <img
-    loading="lazy"
+      loading="lazy"
       src={
         Array.isArray(product.images)
           ? product.images[0].replace(
               "/upload/",
-              "/upload/w_400,h_400,c_fill,f_auto,q_auto/"
+              "/upload/w_400,h_400,c_fill,f_auto,q_auto/",
             )
           : product.images.replace(
               "/upload/",
-              "/upload/w_400,h_400,c_fill,f_auto,q_auto/"
+              "/upload/w_400,h_400,c_fill,f_auto,q_auto/",
             )
       }
       alt={product.name}
@@ -30,15 +30,16 @@ const ProductCard = ({ product, index }) => (
 
     <h3 className="text-3xl mt-1 font-darker text-gray-800">{product.name}</h3>
     <div className="flex gap-6 items-center mt-4">
-      <p className="bg-gray-200 border border-gray-400 rounded text-sm px-4 py-2 mt-1 cursor-default">₹{product.price}</p>
-    <Link
-      to={`/product/${product._id}`}
-      className="bg-black hover:bg-gray-200 hover:border hover:border-gray-500 hover:text-black text-white text-sm mt-1 px-4 py-2 transition duration-300 rounded"
-    >
-      Buy Now
-    </Link>
+      <p className="bg-gray-200 border border-gray-400 rounded text-sm px-4 py-2 mt-1 cursor-default">
+        ₹{product.price}
+      </p>
+      <Link
+        to={`/product/${product._id}`}
+        className="bg-black hover:bg-gray-200 hover:border hover:border-gray-500 hover:text-black text-white text-sm mt-1 px-4 py-2 transition duration-300 rounded"
+      >
+        Buy Now
+      </Link>
     </div>
-    
   </motion.div>
 );
 
@@ -53,13 +54,13 @@ const Home = () => {
     try {
       setLoading(true);
       const res = await axios.get(
-        `https://multivendor-ti71.onrender.com/api/products?page=${page}&limit=6`
+        `https://multivendor-ti71.onrender.com/api/products?page=${page}&limit=6`,
       );
 
       setProducts((prev) => {
         const allProducts = [...prev, ...res.data.products];
         const uniqueProducts = Array.from(
-          new Map(allProducts.map((p) => [p._id, p])).values()
+          new Map(allProducts.map((p) => [p._id, p])).values(),
         );
         return uniqueProducts;
       });
@@ -81,15 +82,14 @@ const Home = () => {
       {/* Hero Section */}
       <div
         className="bg-cover bg-center text-white py-48 px-4"
-       style={{
-  backgroundImage: `
+        style={{
+          backgroundImage: `
     linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
     url('https://images.pexels.com/photos/34737559/pexels-photo-34737559.jpeg')
   `,
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-}}
-
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
       >
         <h1 className="text-4xl font-allison sm:text-8xl drop-shadow">
           Welcome to MultiVendor Marketplace
@@ -106,14 +106,14 @@ const Home = () => {
 
       {/* Product Section */}
       <div className="max-w-7xl mx-auto px-4 py-12">
-        <h2 className="text-3xl font-bold text-center mb-10 text-gray-800 dark:text-white">
-          ✨ Latest Products
+        <h2 className="text-5xl font-darker font-semibold text-center mb-10 text-gray-800 dark:text-white">
+          Latest Products
         </h2>
 
         {error && <p className="text-red-500">{error}</p>}
         {!loading && products.length === 0 && <p>No products found.</p>}
 
-        <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 place-items-center">
+        <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 place-items-center">
           {products.map((product, index) => (
             <ProductCard key={product._id} product={product} index={index} />
           ))}
@@ -126,7 +126,7 @@ const Home = () => {
         {!loading && hasMore && (
           <button
             onClick={() => setPage((prev) => prev + 1)}
-            className="mt-8 px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            className="mt-8 px-6 py-2 bg-yellow-500 text-white rounded-lg hover:bg-blue-700"
           >
             Load More
           </button>

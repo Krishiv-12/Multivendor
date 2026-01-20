@@ -43,7 +43,7 @@ const VerifyOtp = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
+    <div className="flex min-h-screen items-center justify-center px-4">
       <div className="w-full max-w-md rounded-2xl bg-white shadow-xl p-8">
         
         {/* Icon */}
@@ -66,7 +66,7 @@ const VerifyOtp = () => {
         </div>
 
         {/* Title */}
-        <h2 className="text-center text-2xl font-bold text-gray-900">
+        <h2 className="text-center text-4xl font-darker font-semibold text-gray-900">
           Code Verification
         </h2>
         <p className="mt-2 text-center text-sm text-gray-500">

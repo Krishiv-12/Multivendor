@@ -56,10 +56,10 @@ const Login = () => {
         {/* RIGHT FORM SECTION */}
         <div className="w-full md:w-1/2 p-10">
           <div className="flex items-center gap-2 mb-4">
-            <div className="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center text-white font-bold">
+            <div className="w-10 h-10 rounded-full bg-yellow-500 flex items-center justify-center text-white font-bold">
               ✳
             </div>
-            <h2 className="text-2xl font-semibold">Welcome Back</h2>
+            <h2 className="text-4xl font-darker font-semibold">Welcome Back</h2>
           </div>
 
           <p className="text-gray-500 mb-6">
@@ -92,7 +92,7 @@ const Login = () => {
             <input
               type="email"
               placeholder="Your email"
-              className="w-full text-black px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
+              className="w-full text-black px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
               value={user.email}
               onChange={(e) => setUser({ ...user, email: e.target.value })}
             />
@@ -100,7 +100,7 @@ const Login = () => {
             <input
               type="password"
               placeholder="Your password"
-              className="w-full text-black px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
+              className="w-full text-black px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
               value={user.password}
               onChange={(e) => setUser({ ...user, password: e.target.value })}
             />
@@ -117,7 +117,7 @@ const Login = () => {
             Don’t have an account?{" "}
             <span
               onClick={() => navigate("/register")}
-              className="text-orange-500 font-medium cursor-pointer hover:underline"
+              className="text-yellow-500 font-medium cursor-pointer hover:underline"
             >
               Sign up
             </span>

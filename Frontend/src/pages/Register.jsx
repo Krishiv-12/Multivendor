@@ -47,10 +47,10 @@ const Register = () => {
         {/* RIGHT FORM SECTION */}
         <div className="w-full md:w-1/2 p-10">
           <div className="flex items-center gap-2 mb-4">
-            <div className="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center text-white font-bold">
+            <div className="w-10 h-10 rounded-full bg-[#FFBE00] flex items-center justify-center text-white font-bold">
               ✳
             </div>
-            <h2 className="text-2xl font-semibold">Get Started</h2>
+            <h2 className="text-4xl font-darker font-semibold">Get Started</h2>
           </div>
 
           <p className="text-gray-500 mb-6">
@@ -68,7 +68,7 @@ const Register = () => {
             <input
               type="text"
               placeholder="Your name"
-              className="w-full text-black px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
+              className="w-full text-black px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
               value={user.name}
               onChange={(e) =>
                 setUser({ ...user, name: e.target.value })
@@ -78,7 +78,7 @@ const Register = () => {
             <input
               type="email"
               placeholder="Your email"
-              className="w-full text-black px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
+              className="w-full text-black px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
               value={user.email}
               onChange={(e) =>
                 setUser({ ...user, email: e.target.value })
@@ -88,7 +88,7 @@ const Register = () => {
             <input
               type="password"
               placeholder="Create new password"
-              className="w-full text-black px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
+              className="w-full text-black px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
               value={user.password}
               onChange={(e) =>
                 setUser({ ...user, password: e.target.value })
@@ -97,7 +97,7 @@ const Register = () => {
 
             {/* ROLE SELECT */}
             <select
-              className="w-full text-black font-semibold px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
+              className="w-full text-black font-semibold px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
               value={user.role}
               onChange={(e) =>
                 setUser({ ...user, role: e.target.value })
@@ -120,7 +120,7 @@ const Register = () => {
             Already have an account?{" "}
             <span
               onClick={() => navigate("/login")}
-              className="text-orange-500 font-medium cursor-pointer hover:underline"
+              className="text-yellow-500 font-medium cursor-pointer hover:underline"
             >
               Login
             </span>

@@ -8,7 +8,7 @@ const Cart = () => {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-10">
-      <h2 className="text-2xl font-bold mb-4">Shopping Cart</h2>
+      <h2 className="text-4xl font-darker font-semibold mb-4">Shopping Cart</h2>
       
       {cart.length === 0 ? (
         <p>Your cart is empty.</p>

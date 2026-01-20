@@ -2,6 +2,7 @@ import { useEffect, useState, useMemo } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { BsFillSuitHeartFill } from "react-icons/bs";
 
 const shimmer = `
   @keyframes shimmer {
@@ -63,8 +64,8 @@ const Products = () => {
     <div className="max-w-7xl mx-auto px-4 py-10">
       <style>{shimmer}</style>
 
-      <h2 className="text-3xl font-bold mb-6 text-gray-800 dark:text-white text-center">
-        🛍️ Explore Our Products
+      <h2 className="text-4xl font-darker font-bold mb-6 text-gray-800 dark:text-white text-center">
+        Explore Our Products
       </h2>
 
       {/* 🔍 Search & Filter */}
@@ -72,12 +73,12 @@ const Products = () => {
         <input
           type="text"
           placeholder="🔍 Search products..."
-          className="w-full md:w-1/2 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 dark:text-black"
+          className="w-full md:w-1/2 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-yellow-500 dark:text-black"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
         <select
-          className="w-full md:w-1/4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 dark:text-black"
+          className="w-full md:w-1/4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-yellow-500 dark:text-black"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
         >
@@ -90,7 +91,7 @@ const Products = () => {
       </div>
 
       {/* 🛒 Product Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {loading ? (
           Array.from({ length: 6 }).map((_, i) => (
             <div
@@ -111,7 +112,7 @@ const Products = () => {
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ delay: i * 0.05, type: "spring" }}
-              className="bg-white dark:bg-slate-800 rounded-xl shadow-md hover:shadow-xl transition duration-300 p-4"
+              className="bg-[#eeebeb] dark:bg-slate-800 rounded-xl shadow-md hover:shadow-xl transition duration-300 p-2 border border-gray-300"
             >
               <img
                 src={
@@ -126,23 +127,23 @@ const Products = () => {
                 className="h-72 w-full object-cover rounded-lg"
                 loading="lazy"
               />
-              <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mt-4 truncate">
+              <h3 className="text-2xl font-darker text-gray-800 dark:text-gray-200 mt-4 truncate">
                 {product.name}
               </h3>
-              <p className="text-xl font-bold text-green-600 mt-1">
+              <p className="text-xs font-semibold text-gray-500">
                 ₹{product.price}
               </p>
               <div className="mt-3 flex gap-2">
                 <Link to={`/product/${product._id}`} className="w-full">
-                  <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition">
+                  <button className="w-full bg-black hover:bg-white hover:text-black text-white hover:border hover:border-gray-500 py-2 rounded-lg transition duration-300 ">
                     View Details
                   </button>
                 </Link>
                 <button
                   onClick={() => handleAddToWishlist(product._id)}
-                  className="hover:bg-pink-600 text-white px-4 py-2 rounded-lg transition border-2"
+                  className="hover:text-red-500 text-xl bg-white hover:border hover:border-gray-500 px-4 py-2 rounded-lg border-2 transition-all duration-300"
                 >
-                  ❤️
+                  <BsFillSuitHeartFill />
                 </button>
               </div>
             </motion.div>

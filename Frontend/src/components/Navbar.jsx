@@ -38,7 +38,7 @@ const Navbar = () => {
             to="/"
             className="text-2xl md:text-4xl font-reem font-bold text-[#ffff] dark:text-blue-300"
           >
-            MV
+            ShopVerse
           </Link>
 
           {/* Desktop Links */}

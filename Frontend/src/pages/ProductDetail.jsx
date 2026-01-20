@@ -79,9 +79,10 @@ const ProductDetail = () => {
         />
 
         <div>
-          <h2 className="text-3xl font-bold">{product.name}</h2>
+          <h2 className="text-4xl font-darker font-semibold">{product.name}</h2>
+           <p className="text-gray-700">{product.description}</p>
           <p className="text-gray-600 mt-2 text-xl font-semibold">₹{product.price}</p>
-          <p className="text-gray-700 mt-4">{product.description}</p>
+         
           <p className="mt-2 text-sm text-green-600">
             {product.stock > 0 ? "In Stock" : "Out of Stock"}
           </p>
@@ -91,7 +92,7 @@ const ProductDetail = () => {
 
           <button
             className={`mt-4 px-6 py-2 rounded-lg text-white ${
-              product.stock > 0 ? "bg-blue-600 hover:bg-blue-700" : "bg-gray-400 cursor-not-allowed"
+              product.stock > 0 ? "bg-black hover:bg-white hover:text-black border border-gray-300 transition-all duration-300" : "bg-gray-400 cursor-not-allowed"
             }`}
             onClick={handleAddToCart}
             disabled={product.stock <= 0}
@@ -123,7 +124,7 @@ const ProductDetail = () => {
             />
             <button
               onClick={handleReviewSubmit}
-              className="mt-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
+              className="mt-2 bg-green-600 text-white hover:bg-white hover:text-black border border-gray-300 transition-all duration-300 px-4 py-2 rounded-lg"
             >
               Submit Review
             </button>
