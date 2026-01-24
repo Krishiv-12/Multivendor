@@ -1,7 +1,7 @@
 const Footer = () => {
     return (
-      <footer className="text-center ">
-        <p className="text-gray-600">© 2025 MultiVendor. All rights reserved.</p>
+      <footer className="text-center mt-6">
+        <p className="text-gray-600 dark:text-white">© 2025 ShopVerse. All rights reserved.</p>
       </footer>
     );
   };

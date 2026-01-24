@@ -37,12 +37,11 @@ const ProtectedRoute = ({ element, allowedRoles }) => {
 
 function App() {
   return (
-    <div className="min-h-screen w-full bg-[#FFFFFF] dark:bg-gray-900 dark:text-white">
+    <div className="min-h-screen w-full bg-[#FFFFFF] dark:bg-gray-700 dark:text-white">
     <CartProvider>
       <Router>
         <Navbar />
         <ToastContainer position="top-right" autoClose={2000} />{" "}
-        <div className="container mx-auto px-4">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/register" element={<Register />} />
@@ -74,7 +73,6 @@ function App() {
               <Route path="/vendor" element={<VendorDashboard />} />
             </Route>
           </Routes>
-        </div>
         <Footer />
       </Router>
     </CartProvider>

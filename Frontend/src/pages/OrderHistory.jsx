@@ -37,10 +37,12 @@ const OrderHistory = () => {
       );
 
       alert(data.message);
-      // Refresh orders
+
       setOrders((prev) =>
         prev.map((order) =>
-          order._id === orderId ? { ...order, orderStatus: "Cancelled" } : order
+          order._id === orderId
+            ? { ...order, orderStatus: "Cancelled" }
+            : order
         )
       );
     } catch (error) {
@@ -50,56 +52,86 @@ const OrderHistory = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-10">
-      <h2 className="text-2xl font-bold mb-6">🧾 Order History</h2>
+    <div className="max-w-6xl mx-auto px-4 py-10">
+      <h2 className="text-4xl  font-darker font-semibold mb-8 text-gray-800 dark:text-white">
+        Order History
+      </h2>
 
       {orders.length === 0 ? (
-        <p>No orders found.</p>
+        <p className="text-gray-500">No orders found.</p>
       ) : (
-        orders.map((order, index) => (
-          <div key={index} className="border p-4 mb-4 rounded shadow">
-            <p className="font-semibold">Order ID: {order._id}</p>
-            <p>Date: {new Date(order.createdAt).toLocaleString()}</p>
-            <p>Status: {order.orderStatus}</p>
-            <p>Total Amount: ₹{order.amount}</p>
-
-            <div className="mt-2">
-              <h4 className="font-semibold">Products:</h4>
-              {order.orderedProducts.map((item, idx) => (
-              
-                <div key={idx} className="flex items-center space-x-2 mt-2">
-                  <img
-                    src={item.product.images[0]}
-                    alt={item.product.name}
-                    className="w-14 h-14 rounded"
-                  />
-                  <p>
-                    {item.product.name} (x{item.quantity}) - ₹
-                    {item.product.price}
+        <div className="space-y-6">
+          {orders.map((order) => (
+            <div
+              key={order._id}
+              className="bg-white dark:bg-slate-800 shadow-md rounded-2xl p-6"
+            >
+              {/* Order Header */}
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-5">
+                <div>
+                  <p className="text-sm text-gray-500">Order ID</p>
+                  <p className="font-semibold text-gray-800 dark:text-gray-200">
+                    {order._id}
                   </p>
-                  <p
-                    className={`text-sm font-semibold ${
-                      order.orderStatus === "Cancelled"
-                        ? "text-red-500"
-                        : "text-green-600"
-                    }`}
-                  >
-                    
-                    Status: {order.orderStatus}
+                  <p className="text-sm text-gray-500">
+                    {new Date(order.createdAt).toLocaleString()}
                   </p>
                 </div>
-              ))}
+
+                <div className="flex items-center gap-4">
+                  <span
+                    className={`px-3 py-1 rounded-full text-sm font-semibold ${
+                      order.orderStatus === "Cancelled"
+                        ? "bg-red-100 text-red-600"
+                        : "bg-green-100 text-green-600"
+                    }`}
+                  >
+                    {order.orderStatus}
+                  </span>
+
+                  <p className="font-semibold text-gray-800 dark:text-gray-200">
+                    ₹{order.amount}
+                  </p>
+                </div>
+              </div>
+
+              {/* Products */}
+              <div className="border-t dark:border-slate-700 pt-4 space-y-4">
+                {order.orderedProducts.map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="flex items-center gap-4"
+                  >
+                    <img
+                      src={item.product.images[0]}
+                      alt={item.product.name}
+                      className="w-16 h-16 rounded-lg object-cover border"
+                    />
+
+                    <div className="flex-1">
+                      <p className="font-medium text-gray-800 dark:text-gray-200">
+                        {item.product.name}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        Qty: {item.quantity} × ₹{item.product.price}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Cancel Button */}
               {order.orderStatus === "Processing" && (
                 <button
                   onClick={() => cancelOrder(order._id)}
-                  className="mt-3 bg-red-500 text-white px-4 py-2 rounded"
+                  className="mt-5 bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-lg transition"
                 >
-                  ❌ Cancel Order
+                  Cancel Order
                 </button>
               )}
             </div>
-          </div>
-        ))
+          ))}
+        </div>
       )}
     </div>
   );

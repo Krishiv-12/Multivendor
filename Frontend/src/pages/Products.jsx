@@ -64,7 +64,7 @@ const Products = () => {
     <div className="max-w-7xl mx-auto px-4 py-10">
       <style>{shimmer}</style>
 
-      <h2 className="text-4xl font-darker font-bold mb-6 text-gray-800 dark:text-white text-center">
+      <h2 className="text-4xl font-darker font-semibold mb-6 text-gray-800 dark:text-white text-center">
         Explore Our Products
       </h2>
 
@@ -141,7 +141,7 @@ const Products = () => {
                 </Link>
                 <button
                   onClick={() => handleAddToWishlist(product._id)}
-                  className="hover:text-red-500 text-xl bg-white hover:border hover:border-gray-500 px-4 py-2 rounded-lg border-2 transition-all duration-300"
+                  className="hover:text-red-500 dark:text-black dark:hover:text-red-500 text-xl bg-white hover:border hover:border-gray-500 px-4 py-2 rounded-lg border-2 transition-all duration-300"
                 >
                   <BsFillSuitHeartFill />
                 </button>
@@ -160,7 +160,7 @@ const Products = () => {
         <button
           onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
           disabled={page === 1}
-          className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded disabled:opacity-50"
+          className="px-4 py-2 text-black bg-gray-200 hover:bg-gray-300 rounded disabled:opacity-50"
         >
           ← Prev
         </button>
@@ -170,7 +170,7 @@ const Products = () => {
         <button
           onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
           disabled={page === totalPages}
-          className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded disabled:opacity-50"
+          className="px-4 py-2 text-black bg-gray-200 hover:bg-gray-300 rounded disabled:opacity-50"
         >
           Next →
         </button>

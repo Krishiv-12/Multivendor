@@ -10,7 +10,7 @@
     bottom: -1px;
     height: 1px;
     width: 0;
-    background-color: rgb(209, 203, 203);
+    background-color: #fff;
     transition: width 0.3s ease-in-out;
   }
   

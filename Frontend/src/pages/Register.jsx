@@ -33,7 +33,7 @@ const Register = () => {
 
   return (
     <div className="flex items-center justify-center py-4">
-      <div className="flex rounded-2xl overflow-hidden bg-white dark:bg-gray-900">
+      <div className="flex rounded-2xl overflow-hidden bg-white dark:bg-gray-700">
         
         {/* LEFT IMAGE SECTION */}
         <div className="hidden md:flex w-1/2 bg-black relative">
@@ -53,7 +53,7 @@ const Register = () => {
             <h2 className="text-4xl font-darker font-semibold">Get Started</h2>
           </div>
 
-          <p className="text-gray-500 mb-6">
+          <p className="text-gray-500 dark:text-gray-200 mb-6">
                         Create your account. Start shopping smarter.
 
           </p>
@@ -116,7 +116,7 @@ const Register = () => {
             </button>
           </form>
 
-          <p className="text-sm text-center text-gray-500 mt-6">
+          <p className="text-sm text-center text-gray-500 dark:text-gray-300 mt-6">
             Already have an account?{" "}
             <span
               onClick={() => navigate("/login")}

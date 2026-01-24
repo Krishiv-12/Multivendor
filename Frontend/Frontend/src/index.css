@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* In your main CSS file (e.g., index.css or App.css) */
+.nav-link-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    height: 1px;
+    width: 0;
+    background-color: rgb(209, 203, 203);
+    transition: width 0.3s ease-in-out;
+  }
+  
+  .group:hover .nav-link-underline::after {
+    width: 100%;
+  }
+  

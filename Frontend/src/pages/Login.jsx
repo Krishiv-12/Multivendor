@@ -62,7 +62,7 @@ const Login = () => {
             <h2 className="text-4xl font-darker font-semibold">Welcome Back</h2>
           </div>
 
-          <p className="text-gray-500 mb-6">
+          <p className="text-gray-500 dark:text-gray-300 mb-6">
             Login to continue shopping smarter.
           </p>
 
@@ -113,7 +113,7 @@ const Login = () => {
             </button>
           </form>
 
-          <p className="text-sm text-center text-gray-500 mt-6">
+          <p className="text-sm text-center text-gray-500 dark:text-gray-300 mt-6">
             Don’t have an account?{" "}
             <span
               onClick={() => navigate("/register")}
