@@ -17,11 +17,11 @@ const ProductCard = ({ product, index }) => (
         Array.isArray(product.images)
           ? product.images[0].replace(
               "/upload/",
-              "/upload/w_400,h_400,c_fill,f_auto,q_auto/"
+              "/upload/w_400,h_400,c_fill,f_auto,q_auto/",
             )
           : product.images.replace(
               "/upload/",
-              "/upload/w_400,h_400,c_fill,f_auto,q_auto/"
+              "/upload/w_400,h_400,c_fill,f_auto,q_auto/",
             )
       }
       alt={product.name}
@@ -59,12 +59,12 @@ const Home = () => {
     try {
       setLoading(true);
       const res = await axios.get(
-        `https://multivendor-ti71.onrender.com/api/products?page=${page}&limit=6`
+        `https://multivendor-ti71.onrender.com/api/products?page=${page}&limit=6`,
       );
 
       setProducts((prev) => {
         const merged = [...prev, ...res.data.products];
-        return Array.from(new Map(merged.map(p => [p._id, p])).values());
+        return Array.from(new Map(merged.map((p) => [p._id, p])).values());
       });
 
       setHasMore(res.data.products.length > 0);
@@ -92,7 +92,8 @@ const Home = () => {
         }}
       >
         <h1 className="text-2xl sm:text-4xl md:text-5xl font-bartle drop-shadow">
-          Welcome to <br /> <span className="text-yellow-500">ShopVerse</span> <br /> Marketplace
+          Welcome to <br /> <span className="text-yellow-500">ShopVerse</span>{" "}
+          <br /> Marketplace
         </h1>
 
         <p className="mt-4 text-base sm:text-lg md:text-2xl font-quicksand drop-shadow">
@@ -100,8 +101,8 @@ const Home = () => {
         </p>
 
         <Link to="/shop">
-<button
-  className="
+          <button
+            className="
     group relative overflow-hidden mt-8 px-8 py-3
     rounded-xl border border-[#5d5b49]
     bg-[#F4F3E9] text-[#5d5b49]
@@ -112,28 +113,27 @@ const Home = () => {
     hover:shadow-[0_12px_30px_rgba(0,0,0,0.18)]
     active:translate-y-0
   "
->
-  <span
-    className="
+          >
+            <span
+              className="
       relative z-10
       transition-colors duration-500 ease-out
       group-hover:text-[#F4F3E9]
     "
-  >
-    🛍️ Shop Now
-  </span>
+            >
+              🛍️ Shop Now
+            </span>
 
-  <span
-    className="
+            <span
+              className="
       absolute inset-0
       bg-yellow-500
       scale-x-0 origin-left
       transition-transform duration-500 ease-out
       group-hover:scale-x-100
     "
-  />
-</button>
-
+            />
+          </button>
         </Link>
       </div>
 
@@ -158,7 +158,7 @@ const Home = () => {
 
         {!loading && hasMore && (
           <button
-            onClick={() => setPage(prev => prev + 1)}
+            onClick={() => setPage((prev) => prev + 1)}
             className=" mt-8 px-6 py-2 rounded-xl
     bg-white text-black font-reem font-semibold
     border border-gray-300

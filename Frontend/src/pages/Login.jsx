@@ -47,7 +47,7 @@ const Login = () => {
         {/* LEFT IMAGE SECTION */}
         <div className="hidden md:flex w-1/2 bg-black relative">
           <img
-            src="https://i.pinimg.com/1200x/60/a3/de/60a3de7769d3e52a826d64efc8e92c77.jpg"
+            src="https://i.pinimg.com/1200x/fb/78/9b/fb789b031e0f72acf8e97229f0866b66.jpg"
             alt="Login Visual"
             className="absolute inset-0 w-full h-full object-cover opacity-90"
           />

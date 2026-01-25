@@ -38,7 +38,7 @@ const Register = () => {
         {/* LEFT IMAGE SECTION */}
         <div className="hidden md:flex w-1/2 bg-black relative">
           <img
-            src="https://i.pinimg.com/1200x/61/b7/15/61b715b8535c482a82469524acfd7677.jpg"
+            src="https://i.pinimg.com/1200x/3b/e9/90/3be990a833d279e40430b40877947e54.jpg"
             alt="Register Visual"
             className="absolute inset-0 w-full h-full object-cover opacity-90"
           />
