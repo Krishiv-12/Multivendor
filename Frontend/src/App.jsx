@@ -17,7 +17,7 @@ import { ToastContainer } from "react-toastify";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import PrivateRoute from "./components/PrivateRoute";
-import VendorDashboard from "./pages/pages/VendorDashboard";
+import VendorDashboard from "./pages/VendorDashboard";
 import Wishlist from "./pages/Wishlist";
 import Profile from "./pages/Profile";
 import VerifyOtp from "./pages/VerifyOtp";
