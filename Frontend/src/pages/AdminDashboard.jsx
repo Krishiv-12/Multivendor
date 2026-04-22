@@ -59,6 +59,26 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleOrderStatusUpdate = async (orderId, newStatus) => {
+    try {
+      const res = await axios.put(
+        `https://multivendor-ti71.onrender.com/api/orders/admin/order/${orderId}`,
+        { status: newStatus },
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
+
+      setData((prevData) =>
+        prevData.map((order) =>
+          order._id === orderId ? { ...order, orderStatus: res.data.order.orderStatus } : order
+        )
+      );
+    } catch (error) {
+      console.error("Error updating order status:", error);
+    }
+  };
+
   const handleBanUnban = async (userId) => {
     try {
       await axios.put(
@@ -377,8 +397,19 @@ const AdminDashboard = () => {
                     {activeSection === "orders" && (
                       <>
                         <td className="border p-2">{item._id}</td>
-                        <td className="border p-2">${item.amount}</td>
-                        <td className="border p-2">{item.orderStatus}</td>
+                        <td className="border p-2">₹{item.amount}</td>
+                        <td className="border p-2">
+                          <select
+                            value={item.orderStatus}
+                            onChange={(e) => handleOrderStatusUpdate(item._id, e.target.value)}
+                            className="p-1 border rounded text-black"
+                          >
+                            <option value="Processing">Processing</option>
+                            <option value="Shipped">Shipped</option>
+                            <option value="Delivered">Delivered</option>
+                            <option value="Cancelled">Cancelled</option>
+                          </select>
+                        </td>
                       </>
                     )}
                     {activeSection === "vendors" && (

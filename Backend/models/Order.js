@@ -21,6 +21,10 @@ const orderSchema = new mongoose.Schema(
           ref: "Product",
           required: true,
         },
+        vendor: {
+          type: String,
+          required: true,
+        },
         quantity: {
           type: Number,
           default: 1,
@@ -40,7 +44,7 @@ const orderSchema = new mongoose.Schema(
       default: "Processing",
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const Order = mongoose.model("Order", orderSchema);

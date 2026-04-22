@@ -17,7 +17,7 @@ const Login = () => {
     try {
       const res = await axios.post(
         "https://multivendor-ti71.onrender.com/api/auth/login",
-        user
+        user,
       );
 
       localStorage.setItem("role", res.data.role);
@@ -47,7 +47,7 @@ const Login = () => {
         {/* LEFT IMAGE SECTION */}
         <div className="hidden md:flex w-1/2 bg-black relative">
           <img
-            src="https://i.pinimg.com/1200x/fb/78/9b/fb789b031e0f72acf8e97229f0866b66.jpg"
+            src="/login.jpg"
             alt="Login Visual"
             className="absolute inset-0 w-full h-full object-cover opacity-90"
           />

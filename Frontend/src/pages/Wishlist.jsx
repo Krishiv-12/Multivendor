@@ -37,9 +37,8 @@ const Wishlist = () => {
         { headers: { Authorization: `Bearer ${token}` } },
       );
     } catch (error) {
-      // 2️⃣ Revert if error
       setWishlistItems(previousWishlist);
-      alert("Failed to remove item. Try again.");
+      alert("Failed to remove item. Try again.", error);
     } finally {
       setRemovingId(null);
     }

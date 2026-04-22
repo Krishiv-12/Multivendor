@@ -2,8 +2,6 @@ import User from "../models/User.js";
 import Order from "../models/Order.js";
 import Product from "../models/Product.js";
 
-// @desc Get All Users
-// @route GET /api/admin/users
 export const getAllUsers = async (req, res) => {
   try {
     const users = await User.find();
@@ -13,8 +11,6 @@ export const getAllUsers = async (req, res) => {
   }
 };
 
-// @desc Update User Role
-// @route PUT /api/admin/users/:id
 export const updateUserRole = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
@@ -28,8 +24,6 @@ export const updateUserRole = async (req, res) => {
   }
 };
 
-// @desc Delete User
-// @route DELETE /api/admin/users/:id
 export const deleteUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
@@ -42,19 +36,20 @@ export const deleteUser = async (req, res) => {
   }
 };
 
-// @desc Get All Orders
-// @route GET /api/admin/orders
 export const getAllOrders = async (req, res) => {
   try {
-    const orders = await Order.find().populate("user", "name email");
-    res.json(orders);
+    const orders = await Order.find()
+      .populate("user", "name email")
+      .populate("orderedProducts.product", "name price images")
+      .sort({ createdAt: -1 });
+
+    res.json({ success: true, orders });
   } catch (error) {
-    res.status(500).json({ message: "Server Error" });
+    console.error("Error fetching orders:", error);
+    res.status(500).json({ message: "Failed to fetch orders" });
   }
 };
 
-// @desc Get All Products
-// @route GET /api/admin/products
 export const getAllProducts = async (req, res) => {
   try {
     const products = await Product.find().populate("vendor", "name email");
@@ -99,7 +94,9 @@ export const toggleUserBan = async (req, res) => {
     user.isBanned = !user.isBanned;
     await user.save();
 
-    res.json({ message: `User ${user.isBanned ? "banned" : "unbanned"} successfully!` });
+    res.json({
+      message: `User ${user.isBanned ? "banned" : "unbanned"} successfully!`,
+    });
   } catch (error) {
     res.status(500).json({ message: "Server error" });
   }
@@ -137,5 +134,3 @@ export const updateProduct = async (req, res) => {
     res.status(500).json({ message: "Error updating product" });
   }
 };
-
-

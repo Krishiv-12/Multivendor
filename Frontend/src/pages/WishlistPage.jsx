@@ -1,12 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchWishlist, removeFromWishlist } from "../redux/slices/wishlistSlice";
-import { useSelector } from "react-redux";
 
 const WishlistPage = () => {
   const dispatch = useDispatch();
   const { items } = useSelector((state) => state.wishlist);
-  const wishlist = useSelector((state) => state.wishlist.items || []);
 
   useEffect(() => {
     dispatch(fetchWishlist());

@@ -16,13 +16,13 @@ const ProductCard = ({ product, index }) => (
       src={
         Array.isArray(product.images)
           ? product.images[0].replace(
-              "/upload/",
-              "/upload/w_400,h_400,c_fill,f_auto,q_auto/",
-            )
+            "/upload/",
+            "/upload/w_400,h_400,c_fill,f_auto,q_auto/",
+          )
           : product.images.replace(
-              "/upload/",
-              "/upload/w_400,h_400,c_fill,f_auto,q_auto/",
-            )
+            "/upload/",
+            "/upload/w_400,h_400,c_fill,f_auto,q_auto/",
+          )
       }
       alt={product.name}
       className="w-full h-48 sm:h-56 object-cover rounded-lg"
