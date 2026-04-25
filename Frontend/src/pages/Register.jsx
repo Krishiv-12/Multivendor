@@ -32,97 +32,115 @@ const Register = () => {
   };
 
   return (
-    <div className="flex items-center justify-center py-4">
-      <div className="flex rounded-2xl overflow-hidden bg-white dark:bg-gray-700">
+    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-slate-900 transition-colors duration-300">
+      <div className="flex w-full max-w-5xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-gray-100 dark:border-slate-700 overflow-hidden card-enter min-h-[600px]">
         
         {/* LEFT IMAGE SECTION */}
-        <div className="hidden md:flex w-1/2 bg-black relative">
+        <div className="hidden lg:flex w-1/2 relative bg-gray-100 dark:bg-slate-700 overflow-hidden">
+          <div className="absolute inset-0 bg-gray-900/20 mix-blend-multiply z-10" />
           <img
-  src="/register.jpg"
-  alt="Register Visual"
-  className="absolute inset-0 w-full h-full object-cover opacity-90"
-/>
+            src="/register.jpg"
+            alt="Register Visual"
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/20 to-transparent z-10 flex items-end p-12">
+            <div>
+              <h2 className="text-3xl font-bold text-white mb-2">Join the Community</h2>
+              <p className="text-gray-200">Create an account to start shopping or selling securely.</p>
+            </div>
+          </div>
         </div>
 
         {/* RIGHT FORM SECTION */}
-        <div className="w-full md:w-1/2 p-10">
-          <div className="flex items-center gap-2 mb-4">
-            <div className="w-10 h-10 rounded-full bg-[#FFBE00] flex items-center justify-center text-white font-bold">
-              ✳
-            </div>
-            <h2 className="text-4xl font-darker font-semibold">Get Started</h2>
+        <div className="w-full lg:w-1/2 p-10 sm:p-14 flex flex-col justify-center">
+          <div className="mb-8 text-center lg:text-left">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white tracking-tight">
+              Get Started
+            </h2>
+            <p className="text-gray-500 dark:text-gray-400 mt-3">
+              Create your account in just a few steps.
+            </p>
           </div>
 
-          <p className="text-gray-500 dark:text-gray-200 mb-6">
-                        Create your account. Start shopping smarter.
-
-          </p>
-
           {message && (
-            <p className="mb-4 text-sm text-center text-green-600">
-              {message}
-            </p>
+            <div className={`mb-6 flex items-center gap-3 rounded-2xl px-5 py-4 ${
+              message.includes("failed") || message.includes("required") 
+                ? "bg-red-50 text-red-600 dark:bg-red-900/20 dark:text-red-400" 
+                : "bg-emerald-50 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-400"
+            }`}>
+              <span className="text-sm font-medium">{message}</span>
+            </div>
           )}
 
           <form onSubmit={handleRegister} className="space-y-4">
-            <input
-              type="text"
-              placeholder="Your name"
-              className="w-full text-black px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
-              value={user.name}
-              onChange={(e) =>
-                setUser({ ...user, name: e.target.value })
-              }
-            />
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Full Name</label>
+              <input
+                type="text"
+                placeholder="John Doe"
+                className="w-full px-5 py-3.5 bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-400 dark:text-white transition-all placeholder:text-gray-400"
+                value={user.name}
+                onChange={(e) => setUser({ ...user, name: e.target.value })}
+              />
+            </div>
 
-            <input
-              type="email"
-              placeholder="Your email"
-              className="w-full text-black px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
-              value={user.email}
-              onChange={(e) =>
-                setUser({ ...user, email: e.target.value })
-              }
-            />
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Email Address</label>
+              <input
+                type="email"
+                placeholder="hello@example.com"
+                className="w-full px-5 py-3.5 bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-400 dark:text-white transition-all placeholder:text-gray-400"
+                value={user.email}
+                onChange={(e) => setUser({ ...user, email: e.target.value })}
+              />
+            </div>
 
-            <input
-              type="password"
-              placeholder="Create new password"
-              className="w-full text-black px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
-              value={user.password}
-              onChange={(e) =>
-                setUser({ ...user, password: e.target.value })
-              }
-            />
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Password</label>
+              <input
+                type="password"
+                placeholder="Create a strong password"
+                className="w-full px-5 py-3.5 bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-400 dark:text-white transition-all placeholder:text-gray-400"
+                value={user.password}
+                onChange={(e) => setUser({ ...user, password: e.target.value })}
+              />
+            </div>
 
-            {/* ROLE SELECT */}
-            <select
-              className="w-full text-black font-semibold px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
-              value={user.role}
-              onChange={(e) =>
-                setUser({ ...user, role: e.target.value })
-              }
-            >
-              <option value="customer">Customer</option>
-              <option value="vendor">Vendor</option>
-              <option value="admin">Admin</option>
-            </select>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Account Type</label>
+              <div className="relative">
+                <select
+                  className="w-full appearance-none px-5 py-3.5 bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-400 dark:text-white font-medium transition-all"
+                  value={user.role}
+                  onChange={(e) => setUser({ ...user, role: e.target.value })}
+                >
+                  <option value="customer">Customer</option>
+                  <option value="vendor">Vendor</option>
+                  <option value="admin">Admin</option>
+                </select>
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </div>
+            </div>
 
             <button
               type="submit"
-              className="w-full bg-[#FFBE00] hover:bg-[#f0b504] text-white py-3 rounded-lg font-medium transition"
+              className="w-full mt-2 bg-gray-900 dark:bg-white text-white dark:text-gray-900 py-4 rounded-xl font-bold hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors shadow-sm flex justify-center items-center gap-2"
             >
-              Create new account
+              Create Account
             </button>
           </form>
 
-          <p className="text-sm text-center text-gray-500 dark:text-gray-300 mt-6">
+          <p className="text-sm text-center text-gray-500 dark:text-gray-400 mt-8">
             Already have an account?{" "}
             <span
               onClick={() => navigate("/login")}
-              className="text-yellow-500 font-medium cursor-pointer hover:underline"
+              className="font-bold text-gray-900 dark:text-white cursor-pointer hover:underline transition-all"
             >
-              Login
+              Log in instead
             </span>
           </p>
         </div>

@@ -1,15 +1,26 @@
 import { useEffect, useState, useMemo } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
 import { BsFillSuitHeartFill } from "react-icons/bs";
+import LazyImage from "../components/LazyImage";
+import { useToast } from "../components/Toast";
 
-const shimmer = `
-  @keyframes shimmer {
-    0% { background-position: -1000px 0; }
-    100% { background-position: 1000px 0; }
-  }
-`;
+const SkeletonCard = ({ delay = 0 }) => (
+  <div
+    className="bg-white dark:bg-slate-800 rounded-2xl overflow-hidden border border-gray-100 dark:border-slate-700 shadow-sm card-enter"
+    style={{ animationDelay: `${delay}ms` }}
+  >
+    <div className="h-72 w-full animate-pulse bg-gray-200 dark:bg-slate-700 shimmer-bg bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 dark:from-slate-700 dark:via-slate-600 dark:to-slate-700" />
+    <div className="p-5 space-y-3">
+      <div className="h-5 w-3/4 rounded-lg animate-pulse bg-gray-200 dark:bg-slate-700" />
+      <div className="h-4 w-1/3 rounded-lg animate-pulse bg-gray-200 dark:bg-slate-700" />
+      <div className="flex gap-3 pt-3">
+        <div className="flex-1 h-11 rounded-xl animate-pulse bg-gray-200 dark:bg-slate-700" />
+        <div className="w-14 h-11 rounded-xl animate-pulse bg-gray-200 dark:bg-slate-700" />
+      </div>
+    </div>
+  </div>
+);
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -19,6 +30,7 @@ const Products = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
 
+  const { showToast, ToastComponent } = useToast();
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -26,7 +38,7 @@ const Products = () => {
       setLoading(true);
       try {
         const res = await axios.get(
-          `https://multivendor-ti71.onrender.com/api/products?page=${page}&limit=9`
+          `https://multivendor-ti71.onrender.com/api/products?page=${page}&limit=8`
         );
         setProducts(res.data.products || []);
         setTotalPages(res.data.totalPages);
@@ -48,132 +60,152 @@ const Products = () => {
   }, [products, search, category]);
 
   const handleAddToWishlist = async (productId) => {
+    if (!token) {
+      showToast("Please login to add to wishlist", "error");
+      return;
+    }
     try {
       await axios.post(
         "https://multivendor-ti71.onrender.com/api/wishlist/add",
         { productId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      alert("✅ Added to wishlist!");
+      showToast("Added to wishlist!", "success");
     } catch (error) {
-      alert(error.response?.data?.message || "Error adding to wishlist");
+      showToast(error.response?.data?.message || "Error adding to wishlist", "error");
     }
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-10">
-      <style>{shimmer}</style>
-
-      <h2 className="text-4xl font-darker font-semibold mb-6 text-gray-800 dark:text-white text-center">
-        Explore Our Products
-      </h2>
-
-      {/* 🔍 Search & Filter */}
-      <div className="flex flex-col md:flex-row gap-4 md:items-center justify-between mb-8">
-        <input
-          type="text"
-          placeholder="🔍 Search products..."
-          className="w-full md:w-1/2 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-yellow-500 dark:text-black"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <select
-          className="w-full md:w-1/4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-yellow-500 dark:text-black"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        >
-          <option value="">All Categories</option>
-          <option value="Electronics">Electronics</option>
-          <option value="Clothing">Clothing</option>
-          <option value="Home & Kitchen">Home & Kitchen</option>
-          <option value="Accessories">Accessories</option>
-        </select>
-      </div>
-
-      {/* 🛒 Product Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {loading ? (
-          Array.from({ length: 6 }).map((_, i) => (
-            <div
-              key={`shimmer-${i}`}
-              className="bg-gray-200 rounded-lg h-96 animate-pulse relative overflow-hidden"
-              style={{
-                background:
-                  "linear-gradient(90deg, #e0e0e0 25%, #f2f2f2 50%, #e0e0e0 75%)",
-                backgroundSize: "200% 100%",
-                animation: "shimmer 1.5s infinite",
-              }}
-            ></div>
-          ))
-        ) : filteredProducts.length > 0 ? (
-          filteredProducts.map((product, i) => (
-            <motion.div
-              key={`${product._id}-${i}`}
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ delay: i * 0.05, type: "spring" }}
-              className="bg-[#eeebeb] dark:bg-slate-800 rounded-xl shadow-md hover:shadow-xl transition duration-300 p-2 border border-gray-300"
-            >
-              <img
-                src={
-                  product.images[0]
-                    ? product.images[0].replace(
-                        "/upload/",
-                        "/upload/w_400,h_400,c_fill,f_auto,q_auto/"
-                      )
-                    : "https://via.placeholder.com/400x400"
-                }
-                alt={product.name}
-                className="h-72 w-full object-cover rounded-lg"
-                loading="lazy"
-              />
-              <h3 className="text-2xl font-darker text-gray-800 dark:text-gray-200 mt-4 truncate">
-                {product.name}
-              </h3>
-              <p className="text-xs font-semibold text-gray-500">
-                ₹{product.price}
-              </p>
-              <div className="mt-3 flex gap-2">
-                <Link to={`/product/${product._id}`} className="w-full">
-                  <button className="w-full bg-black hover:bg-white hover:text-black text-white hover:border hover:border-gray-500 py-2 rounded-lg transition duration-300 ">
-                    View Details
-                  </button>
-                </Link>
-                <button
-                  onClick={() => handleAddToWishlist(product._id)}
-                  className="hover:text-red-500 dark:text-black dark:hover:text-red-500 text-xl bg-white hover:border hover:border-gray-500 px-4 py-2 rounded-lg border-2 transition-all duration-300"
-                >
-                  <BsFillSuitHeartFill />
-                </button>
-              </div>
-            </motion.div>
-          ))
-        ) : (
-          <p className="text-gray-600 col-span-3 text-center">
-            No products found.
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-900 transition-colors duration-300 py-10">
+      {ToastComponent}
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="mb-8 card-enter">
+          <p className="text-[10px] font-bold uppercase tracking-widest text-blue-500 dark:text-blue-400 mb-1 text-center md:text-left">
+            Catalog
           </p>
-        )}
-      </div>
+          <h2 className="text-4xl font-bold text-gray-900 dark:text-white tracking-tight text-center md:text-left">
+            Explore Our Products
+          </h2>
+        </div>
 
-      {/* ⏩ Pagination */}
-      <div className="flex justify-center mt-10 gap-4 items-center">
-        <button
-          onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-          disabled={page === 1}
-          className="px-4 py-2 text-black bg-gray-200 hover:bg-gray-300 rounded disabled:opacity-50"
-        >
-          ← Prev
-        </button>
-        <span className="text-lg font-medium">
-          Page {page} of {totalPages}
-        </span>
-        <button
-          onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
-          disabled={page === totalPages}
-          className="px-4 py-2 text-black bg-gray-200 hover:bg-gray-300 rounded disabled:opacity-50"
-        >
-          Next →
-        </button>
+        {/* 🔍 Search & Filter */}
+        <div className="flex flex-col md:flex-row gap-4 md:items-center justify-between mb-8 card-enter" style={{ animationDelay: "100ms" }}>
+          <div className="relative w-full md:w-1/2">
+            <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input
+              type="text"
+              placeholder="Search products..."
+              className="w-full pl-12 pr-4 py-3.5 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-400 dark:text-white transition-shadow shadow-sm"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+          
+          <div className="relative w-full md:w-1/4">
+            <select
+              className="w-full appearance-none px-4 py-3.5 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-400 dark:text-white transition-shadow shadow-sm"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option value="">All Categories</option>
+              <option value="Electronics">Electronics</option>
+              <option value="Clothing">Clothing</option>
+              <option value="Home & Kitchen">Home & Kitchen</option>
+              <option value="Accessories">Accessories</option>
+            </select>
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        {/* 🛒 Product Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {loading ? (
+            Array.from({ length: 8 }).map((_, i) => (
+              <SkeletonCard key={`shimmer-${i}`} delay={i * 70} />
+            ))
+          ) : filteredProducts.length > 0 ? (
+            filteredProducts.map((product, i) => (
+              <div
+                key={product._id}
+                className="group bg-white dark:bg-slate-800 rounded-2xl overflow-hidden border border-gray-100 dark:border-slate-700 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 card-enter flex flex-col"
+                style={{ animationDelay: `${i * 65}ms` }}
+              >
+                <div className="relative h-72 w-full bg-gray-50 dark:bg-slate-700 overflow-hidden">
+                  <LazyImage src={product.images} alt={product.name} />
+                  
+                  <button
+                    onClick={() => handleAddToWishlist(product._id)}
+                    className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white dark:bg-slate-800 shadow-md flex items-center justify-center opacity-0 group-hover:opacity-100 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 transition-all duration-200 text-gray-400"
+                    title="Add to Wishlist"
+                  >
+                    <BsFillSuitHeartFill className="w-4 h-4" />
+                  </button>
+                </div>
+                
+                <div className="p-5 flex flex-col flex-1">
+                  <h3 className="text-base font-semibold text-gray-800 dark:text-gray-200 line-clamp-2 leading-snug mb-1">
+                    {product.name}
+                  </h3>
+                  <p className="text-lg font-bold text-gray-900 dark:text-white mb-4">
+                    ₹{product.price?.toLocaleString("en-IN")}
+                  </p>
+                  
+                  <div className="mt-auto pt-2">
+                    <Link to={`/product/${product._id}`} className="block w-full">
+                      <button className="w-full py-2.5 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-sm font-semibold hover:bg-gray-700 dark:hover:bg-gray-100 transition-colors flex items-center justify-center gap-2">
+                        View Details
+                      </button>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="col-span-full py-20 text-center card-enter">
+              <div className="w-20 h-20 mx-auto rounded-full bg-gray-100 dark:bg-slate-800 flex items-center justify-center mb-5">
+                 <svg className="w-9 h-9 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                 </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                No products found
+              </h3>
+              <p className="text-gray-400 dark:text-gray-500">
+                Try adjusting your search or filters.
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* ⏩ Pagination */}
+        {!loading && totalPages > 1 && (
+          <div className="flex justify-center mt-12 gap-3 items-center card-enter" style={{ animationDelay: "300ms" }}>
+            <button
+              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+              disabled={page === 1}
+              className="px-5 py-2.5 rounded-xl border border-gray-200 dark:border-slate-700 text-gray-600 dark:text-gray-300 font-medium hover:bg-gray-50 dark:hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              Previous
+            </button>
+            <span className="text-sm font-semibold text-gray-700 dark:text-gray-300 px-4">
+              Page {page} of {totalPages}
+            </span>
+            <button
+              onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+              disabled={page === totalPages}
+              className="px-5 py-2.5 rounded-xl border border-gray-200 dark:border-slate-700 text-gray-600 dark:text-gray-300 font-medium hover:bg-gray-50 dark:hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              Next
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

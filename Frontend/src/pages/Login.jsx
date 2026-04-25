@@ -17,7 +17,7 @@ const Login = () => {
     try {
       const res = await axios.post(
         "https://multivendor-ti71.onrender.com/api/auth/login",
-        user,
+        user
       );
 
       localStorage.setItem("role", res.data.role);
@@ -42,84 +42,93 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center py-4">
-      <div className="flex w-full max-w-5xl h-[540px] rounded-2xl overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-slate-900 transition-colors duration-300">
+      <div className="flex w-full max-w-5xl bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-gray-100 dark:border-slate-700 overflow-hidden card-enter min-h-[600px]">
+        
         {/* LEFT IMAGE SECTION */}
-        <div className="hidden md:flex w-1/2 bg-black relative">
+        <div className="hidden lg:flex w-1/2 relative bg-gray-100 dark:bg-slate-700 overflow-hidden">
+          <div className="absolute inset-0 bg-gray-900/20 mix-blend-multiply z-10" />
           <img
             src="/login.jpg"
             alt="Login Visual"
-            className="absolute inset-0 w-full h-full object-cover opacity-90"
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 hover:scale-105"
           />
+          <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/20 to-transparent z-10 flex items-end p-12">
+            <div>
+              <h2 className="text-3xl font-bold text-white mb-2">Welcome Back</h2>
+              <p className="text-gray-200">Sign in to discover premium products curated just for you.</p>
+            </div>
+          </div>
         </div>
 
         {/* RIGHT FORM SECTION */}
-        <div className="w-full md:w-1/2 p-10">
-          <div className="flex items-center gap-2 mb-4">
-            <div className="w-10 h-10 rounded-full bg-yellow-500 flex items-center justify-center text-white font-bold">
-              ✳
-            </div>
-            <h2 className="text-4xl font-darker font-semibold">Welcome Back</h2>
+        <div className="w-full lg:w-1/2 p-10 sm:p-14 flex flex-col justify-center">
+          <div className="mb-10 text-center lg:text-left">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white tracking-tight">
+              Sign In
+            </h2>
+            <p className="text-gray-500 dark:text-gray-400 mt-3">
+              Login to continue shopping smarter.
+            </p>
           </div>
 
-          <p className="text-gray-500 dark:text-gray-300 mb-6">
-            Login to continue shopping smarter.
-          </p>
-
           {message && (
-            <div className="mb-4 flex items-center gap-3 rounded-lg bg-blue-50 border border-blue-200 px-4 py-3 text-blue-700">
-              <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24">
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                  fill="none"
-                />
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-                />
-              </svg>
+            <div className={`mb-6 flex items-center gap-3 rounded-2xl px-5 py-4 ${
+              message.includes("failed") || message.includes("required") 
+                ? "bg-red-50 text-red-600 dark:bg-red-900/20 dark:text-red-400" 
+                : "bg-emerald-50 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-400"
+            }`}>
+              {!message.includes("failed") && !message.includes("required") && (
+                <svg className="h-5 w-5 animate-spin shrink-0" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+                </svg>
+              )}
               <span className="text-sm font-medium">{message}</span>
             </div>
           )}
 
-          <form onSubmit={handleLogin} className="space-y-4">
-            <input
-              type="email"
-              placeholder="Your email"
-              className="w-full text-black px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
-              value={user.email}
-              onChange={(e) => setUser({ ...user, email: e.target.value })}
-            />
+          <form onSubmit={handleLogin} className="space-y-5">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email Address</label>
+              <input
+                type="email"
+                placeholder="hello@example.com"
+                className="w-full px-5 py-3.5 bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-400 dark:text-white transition-all placeholder:text-gray-400 dark:placeholder:text-gray-500"
+                value={user.email}
+                onChange={(e) => setUser({ ...user, email: e.target.value })}
+              />
+            </div>
 
-            <input
-              type="password"
-              placeholder="Your password"
-              className="w-full text-black px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
-              value={user.password}
-              onChange={(e) => setUser({ ...user, password: e.target.value })}
-            />
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Password</label>
+              <input
+                type="password"
+                placeholder="••••••••"
+                className="w-full px-5 py-3.5 bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-400 dark:text-white transition-all placeholder:text-gray-400 dark:placeholder:text-gray-500"
+                value={user.password}
+                onChange={(e) => setUser({ ...user, password: e.target.value })}
+              />
+            </div>
 
             <button
               type="submit"
-              className="w-full bg-[#FFBE00] hover:bg-[#f0b504] text-white py-3 rounded-lg font-medium transition"
+              className="w-full mt-4 bg-gray-900 dark:bg-white text-white dark:text-gray-900 py-4 rounded-xl font-bold hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors shadow-sm flex justify-center items-center gap-2"
             >
-              Login
+              Sign In
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
             </button>
           </form>
 
-          <p className="text-sm text-center text-gray-500 dark:text-gray-300 mt-6">
+          <p className="text-sm text-center text-gray-500 dark:text-gray-400 mt-8">
             Don’t have an account?{" "}
             <span
               onClick={() => navigate("/register")}
-              className="text-yellow-500 font-medium cursor-pointer hover:underline"
+              className="font-bold text-gray-900 dark:text-white cursor-pointer hover:underline transition-all"
             >
-              Sign up
+              Create one now
             </span>
           </p>
         </div>

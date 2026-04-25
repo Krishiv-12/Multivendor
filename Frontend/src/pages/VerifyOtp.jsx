@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 const VerifyOtp = () => {
   const [otp, setOtp] = useState("");
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const email = localStorage.getItem("email");
 
@@ -16,6 +17,7 @@ const VerifyOtp = () => {
       return;
     }
 
+    setLoading(true);
     try {
       const res = await axios.post(
         "https://multivendor-ti71.onrender.com/api/otp/verify",
@@ -26,7 +28,7 @@ const VerifyOtp = () => {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("isVerified", "true");
         localStorage.removeItem("email");
-        setMessage("OTP verified successfully.");
+        setMessage("OTP verified successfully. Redirecting...");
 
         const role = localStorage.getItem("role");
         setTimeout(() => {
@@ -38,19 +40,21 @@ const VerifyOtp = () => {
         setMessage("Invalid OTP. Please try again.");
       }
     } catch (err) {
-      setMessage("Error verifying OTP");
+      setMessage("Error verifying OTP. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center px-4">
-      <div className="w-full max-w-md rounded-2xl bg-white shadow-xl p-8">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-slate-900 px-4 transition-colors duration-300 py-12">
+      <div className="w-full max-w-md bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-gray-100 dark:border-slate-700 p-10 card-enter">
         
         {/* Icon */}
-        <div className="flex justify-center mb-6">
-          <div className="h-14 w-14 rounded-full bg-blue-100 flex items-center justify-center">
+        <div className="flex justify-center mb-8">
+          <div className="h-16 w-16 rounded-full bg-gray-100 dark:bg-slate-700 flex items-center justify-center shadow-sm">
             <svg
-              className="h-7 w-7 text-blue-600"
+              className="h-8 w-8 text-gray-900 dark:text-white"
               fill="none"
               stroke="currentColor"
               strokeWidth="2"
@@ -66,47 +70,58 @@ const VerifyOtp = () => {
         </div>
 
         {/* Title */}
-        <h2 className="text-center text-4xl font-darker font-semibold text-gray-900">
-          Code Verification
-        </h2>
-        <p className="mt-2 text-center text-sm text-gray-500">
-          We have sent a verification code to your email
-        </p>
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">
+            Verify Your Email
+          </h2>
+          <p className="mt-3 text-sm text-gray-500 dark:text-gray-400">
+            We sent a verification code to <span className="font-semibold text-gray-700 dark:text-gray-300">{email || "your email"}</span>
+          </p>
+        </div>
 
         {/* Message */}
         {message && (
-          <div className="mt-4 text-center text-sm font-medium text-green-600">
-            {message}
+          <div className={`mb-6 flex items-center justify-center gap-2 rounded-xl px-4 py-3 ${
+            message.includes("Error") || message.includes("Invalid") || message.includes("Missing")
+              ? "bg-red-50 text-red-600 dark:bg-red-900/20 dark:text-red-400" 
+              : "bg-emerald-50 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-400"
+          }`}>
+            <span className="text-sm font-medium">{message}</span>
           </div>
         )}
 
         {/* Form */}
-        <form onSubmit={handleVerify} className="mt-6 space-y-6">
-          
-          {/* OTP Input */}
-          <input
-            type="text"
-            maxLength="6"
-            placeholder="Enter 6-digit OTP"
-            value={otp}
-            onChange={(e) => setOtp(e.target.value)}
-            className="w-full text-center tracking-[0.4em] text-lg font-semibold rounded-lg border border-gray-300 px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+        <form onSubmit={handleVerify} className="space-y-6">
+          <div>
+            <input
+              type="text"
+              maxLength="6"
+              placeholder="••••••"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+              className="w-full text-center tracking-[0.75em] text-2xl font-bold bg-gray-50 dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-700 px-4 py-4 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-slate-400 transition-all placeholder:text-gray-300 dark:placeholder:text-gray-600"
+            />
+          </div>
 
-          {/* Button */}
           <button
             type="submit"
-            className="w-full rounded-full bg-blue-600 py-3 text-white font-semibold hover:bg-blue-700 transition"
+            disabled={loading || otp.length < 6}
+            className="w-full py-4 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold transition-all duration-300 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-800 dark:hover:bg-gray-100 flex items-center justify-center gap-2"
           >
-            Verify Account
+            {loading ? (
+              <svg className="w-5 h-5 animate-spin" viewBox="0 0 24 24" fill="none">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+              </svg>
+            ) : "Verify Account"}
           </button>
         </form>
 
         {/* Resend */}
-        <p className="mt-6 text-center text-sm text-gray-500">
+        <p className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
           Didn’t receive the code?{" "}
-          <span className="cursor-pointer text-blue-600 hover:underline">
-            Resend
+          <span className="cursor-pointer font-bold text-gray-900 dark:text-white hover:underline transition-all">
+            Resend Code
           </span>
         </p>
       </div>
